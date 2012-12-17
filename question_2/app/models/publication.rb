@@ -6,4 +6,8 @@ class Publication < ActiveRecord::Base
 
   has_many :publication_skilltags
   has_many :skilltags, through: :publication_skilltags
+
+  def url_name
+    self.url.gsub(/https?:\/\//, '')
+  end
 end
