@@ -6,6 +6,7 @@ class PublicationsController < ApplicationController
 
   def show
     @publication = Publication.find params[:id]
+    @skilltag = Skilltag.new
   end
 
   def new
@@ -35,7 +36,7 @@ class PublicationsController < ApplicationController
 
   def add_skilltag
     @publication = Publication.find params[:id]
-    @skilltag = Skilltag.where(name: params[:skilltag]).first_or_create!
+    @skilltag = Skilltag.find_by_name(params[:skilltag][:name]) || Skilltag.new(params[:skilltag])
 
     if @publication.skilltags << @skilltag
       redirect_to @publication, notice: "#{@publication.title}のスキルに#{@skilltag.name}を追加しました"
